@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>GOT9 sample Ling export - Phu Ruea pilot</name>
+    <Placemark>
+      <name>แปลงทดสอบ บ้านหลังสวน</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              101.3650,17.4105,0
+              101.3680,17.4105,0
+              101.3680,17.4080,0
+              101.3650,17.4080,0
+              101.3650,17.4105,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+    <Placemark>
+      <name>แปลงทดสอบ ห้วยไผ่ (คทช.)</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              101.3600,17.4020,0
+              101.3625,17.4020,0
+              101.3625,17.4000,0
+              101.3600,17.4000,0
+              101.3600,17.4020,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>

@@ -1,0 +1,18 @@
+# Dart/Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Hive / local run logs
+run.log
+run.err.log
+
+# Secrets - never commit
+.env
+*.env
