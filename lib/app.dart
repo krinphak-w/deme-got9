@@ -16,6 +16,7 @@ import 'features/farmer/plot_manual.dart';
 import 'features/farmer/plot_walk.dart';
 import 'features/profile/profile_page.dart';
 import 'features/shop/shop_page.dart';
+import 'features/trace/showcase_page.dart';
 import 'features/trace/trace_page.dart';
 import 'features/workshop/workshop_page.dart';
 import 'l10n/strings.dart';
@@ -49,6 +50,9 @@ class _Got9AppState extends State<Got9App> {
         GoRoute(path: '/shop', builder: (_, __) => const ShopPage()),
         GoRoute(path: '/workshop', builder: (_, __) => const WorkshopPage()),
         GoRoute(
+            path: '/trace/showcase',
+            builder: (_, __) => const TraceShowcasePage()),
+        GoRoute(
           path: '/trace/:plotId',
           builder: (_, s) => TracePage(plotId: s.pathParameters['plotId']!),
         ),
@@ -59,6 +63,7 @@ class _Got9AppState extends State<Got9App> {
       redirect: (ctx, rs) {
         final AppState st = ctx.read<AppState>();
         final bool public = rs.matchedLocation == '/auth' ||
+            rs.matchedLocation == '/trace/showcase' ||
             rs.matchedLocation.startsWith('/trace/') ||
             rs.matchedLocation == '/shop' ||
             rs.matchedLocation == '/workshop';
@@ -130,6 +135,11 @@ class Got9Bar extends StatelessWidget implements PreferredSizeWidget {
           tooltip: 'A-',
           onPressed: () => state.bumpFont(-0.1),
           icon: const Text('A-', style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
+        IconButton(
+          tooltip: 'ขนาดปกติ / Reset',
+          onPressed: () => state.resetFont(),
+          icon: const Text('A', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         IconButton(
           tooltip: 'A+',

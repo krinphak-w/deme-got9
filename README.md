@@ -16,6 +16,7 @@ lib/
   features/shop        /shop (Yield Buffer 70% + receipt mock)
   features/workshop    /workshop (30% deposit + QR ticket)
   features/trace       /trace/{plot_id} (public, no login)
+                       /trace/showcase (public mock: FREYA FLOW story+timeline+กราฟอากาศ)
   features/corporate   /corporate (B2B + VAT invoice mock)
   features/admin       /admin/verify (village + agri approve)
   features/profile     /profile (แก้ชื่อ/เบอร์/รูปโปรไฟล์, ปุ่ม 👤 บนทุกหน้า)
@@ -53,6 +54,13 @@ flutter run --dart-define=SUPABASE_URL=https://xyz.supabase.co --dart-define=SUP
 | F-ID คทช. (รอรับรอง) | 0811111113 | /farmer/home (PLOT-00003) |
 
 ติ๊ก ✅ PDPA consent ก่อนปุ่ม login จะกดได้
+
+## ฟีเจอร์สาธิตเพิ่มเติม (รอบ 2)
+- **Offline draft**: ฟอร์ม log บันทึกแบบร่างลง localStorage อัตโนมัติ (shared_preferences) รีเฟรชไม่หาย + ป้าย "มีแบบร่างออฟไลน์"
+- **Buffer zone**: แปลงเขียว + แนวกันชนแดง 2 ม. ทุกแผนที่ + `assets/demo_buffer.geojson`
+- **A-/A/A+**: ปุ่มรีเซ็ตขนาดฟอนต์เพิ่มแล้ว (แถบบนทุกหน้า)
+- **Yield progress**: การ์ดสินค้ามีหลอด progress + ข้อความโควต้าพรีออเดอร์
+- **อากาศ**: การ์ด Open-Meteo หน้า farmer (มี cache ตอนออฟไลน์)
 
 ## Test checklist (20 แปลงนำร่อง)
 - [ ] Import `assets/sample_ling.kml` → ได้ 2 แปลง (แปลงละ ~55 ไร่), net < gross (หัก buffer 2 ม.)

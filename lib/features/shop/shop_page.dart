@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../app.dart';
+import '../../core/buffer_zone.dart';
 import '../../core/money.dart';
 import '../../core/photo.dart';
 import '../../data/app_state.dart';
@@ -29,6 +31,18 @@ class _ShopPageState extends State<ShopPage> {
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: [
+          Card(
+            color: Colors.purple.shade50,
+            child: ListTile(
+              leading: const Icon(Icons.auto_awesome,
+                  color: Colors.purple),
+              title: const Text('ดูตัวอย่าง QR Storytelling (Mock)'),
+              subtitle: const Text(
+                  'เยลลี่หมีขิง FREYA FLOW — ไทม์ไลน์ + กราฟอากาศ + เรื่องเล่า AI'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () => context.go('/trace/showcase'),
+            ),
+          ),
           for (final p in state.products.where((e) => e.active))
             _productCard(context, state, p),
         ],
@@ -41,6 +55,8 @@ class _ShopPageState extends State<ShopPage> {
     final int sellable = sellableQty(p.harvestQty, p.stockBufferPct);
     final int left = sellable - p.soldQty;
     final int qty = _qty[p.id] ?? 1;
+    final double fill =
+        bufferFillPct(p.harvestQty, p.soldQty, p.stockBufferPct);
     final bytes = state.productPhotos[p.id];
     final bool editable = state.canEditProduct(p.id);
     return Card(
@@ -109,6 +125,22 @@ class _ShopPageState extends State<ShopPage> {
                   visualDensity: VisualDensity.compact,
                 ),
               ],
+            ),
+            const SizedBox(height: 8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: LinearProgressIndicator(
+                value: fill,
+                minHeight: 10,
+                backgroundColor: Colors.green.shade50,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                    left > 0 ? Colors.green : Colors.red),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'เปิดรับพรีออเดอร์ $p.soldQty/$sellable (เพียง ${(100 - p.stockBufferPct).toInt()}% ของผลผลิต ${p.harvestQty} ชิ้น — กัน Buffer ${p.stockBufferPct.toInt()}%)',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
             Row(

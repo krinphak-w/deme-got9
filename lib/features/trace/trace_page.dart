@@ -9,7 +9,7 @@ import '../../core/pdpa.dart';
 import '../../core/thai_units.dart';
 import '../../data/app_state.dart';
 import '../../data/models.dart';
-import '../farmer/home_page.dart';
+import '../../widgets/plot_map.dart';
 
 /// /trace/{plot_id} — PUBLIC, no login. Story + map + cert + buy again.
 class TracePage extends StatelessWidget {
@@ -53,7 +53,10 @@ class TracePage extends StatelessWidget {
               'เกษตรกร ${plot.ownerFid} • ${formatRaiNganWah(plot.areaNetRai * 1600)} • ${state.tr('year1')}'),
           const SizedBox(height: 8),
           if (plot.hasMap) ...[
-            PlotMiniMap(polygon: plot.polygon!, height: 200),
+            PlotMapView(
+                polygon: plot.polygon!,
+                height: 200,
+                interactive: false),
             Text(
                 'พิกัดสาธารณะ (เบลอระดับตำบล): $publicGps',
                 style: Theme.of(context).textTheme.bodySmall),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:got9_phase1/core/buffer_zone.dart';
 import 'package:got9_phase1/core/kml_parser.dart';
 import 'package:got9_phase1/core/thai_units.dart';
 import 'package:latlong2/latlong.dart';
@@ -31,12 +32,32 @@ void main() {
     expect(polygonAreaSqm([const LatLng(0, 0)]), 0);
   });
 
-  test('manual rai-ngan-wah converts + square net approx', () {
-    expect(raiNganWahToSqm(1, 2, 50), 1600 + 800 + 200);
+  test('manual rai-ngan-wah converts + square net approx', () {    expect(raiNganWahToSqm(1, 2, 50), 1600 + 800 + 200);
     // 1 rai square ≈ 40m side; buffer 2m -> net < gross, > 0
     final double net = netSquareApproxSqm(1600, 2.0);
     expect(net, lessThan(1600));
     expect(net, greaterThan(1000));
     expect(netSquareApproxSqm(0, 2.0), 0);
+  });
+
+  test('buffered polygon expands outward', () {
+    const square = [
+      LatLng(17.4100, 101.3650),
+      LatLng(17.4100, 101.3660),
+      LatLng(17.4090, 101.3660),
+      LatLng(17.4090, 101.3650),
+    ];
+    final double gross = polygonAreaSqm(square);
+    final List<LatLng> buf = bufferedPolygon(square, 2.0);
+    expect(buf.length, square.length);
+    expect(polygonAreaSqm(buf), greaterThan(gross));
+    // degenerate input returns copy
+    expect(bufferedPolygon([const LatLng(0, 0)], 2.0).length, 1);
+  });
+
+  test('buffer fill fraction for progress bar', () {
+    expect(bufferFillPct(200, 30, 70), closeTo(0.5, 0.001)); // 30/60
+    expect(bufferFillPct(200, 60, 70), 1.0);
+    expect(bufferFillPct(0, 0, 70), 1.0);
   });
 }

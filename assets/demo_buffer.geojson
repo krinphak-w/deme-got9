@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "name": "GOT9 buffer-zone demo (Phu Ruea, 3 ngan plot)",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "แปลงสาธิต 3 งาน (อินทรีย์)", "kind": "plot" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [101.3650, 17.4105],
+          [101.3662, 17.4105],
+          [101.3662, 17.4095],
+          [101.3650, 17.4095],
+          [101.3650, 17.4105]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "แปลงข้างเคียง (เคมี)", "kind": "neighbor" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [101.3662, 17.4105],
+          [101.3674, 17.4105],
+          [101.3674, 17.4095],
+          [101.3662, 17.4095],
+          [101.3662, 17.4105]
+        ]]
+      }
+    }
+  ]
+}

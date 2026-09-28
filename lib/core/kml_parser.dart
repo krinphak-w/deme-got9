@@ -31,8 +31,7 @@ class LingPlot {
 ///
 /// KML coordinates are lng,lat[,alt] tuples. KMZ is a zip containing a
 /// `doc.kml`. GeoJSON accepts Polygon / MultiPolygon / FeatureCollection.
-List<LingPlot> parseLingFile(String fileName, List<int> bytes) {
-  final String lower = fileName.toLowerCase();
+List<LingPlot> parseLingFile(String fileName, List<int> bytes) {  final String lower = fileName.toLowerCase();
   if (lower.endsWith('.kmz')) {
     final Archive archive = ZipDecoder().decodeBytes(bytes);
     for (final file in archive.files) {
@@ -49,6 +48,10 @@ List<LingPlot> parseLingFile(String fileName, List<int> bytes) {
   }
   return _parseKml(text, fileName); // default: .kml
 }
+
+/// Parse a GeoJSON text (e.g. bundled demo asset) into [LingPlot]s.
+List<LingPlot> parseGeoJsonText(String text, String sourceName) =>
+    _parseGeoJson(text, sourceName);
 
 List<LingPlot> _parseKml(String text, String fileName) {
   final XmlDocument doc = XmlDocument.parse(text);

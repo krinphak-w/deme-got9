@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -9,6 +7,8 @@ import '../../app.dart';
 import '../../core/thai_units.dart';
 import '../../data/app_state.dart';
 import '../../data/models.dart';
+import '../../widgets/plot_map.dart';
+import '../../widgets/weather_card.dart';
 
 /// /farmer/home — my plots + add-plot menu (4 channels) + QR per plot.
 class FarmerHomePage extends StatefulWidget {
@@ -38,6 +38,8 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: [
+          const WeatherCard(),
+          const SizedBox(height: 8),
           FilledButton.icon(
             icon: const Icon(Icons.add_location_alt),
             label: Text(state.tr('addPlot')),
@@ -106,31 +108,7 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
                   style: Theme.of(context).textTheme.bodySmall),
             const SizedBox(height: 8),
             if (plot.hasMap)
-              SizedBox(
-                height: 160,
-                child: FlutterMap(
-                  options: MapOptions(
-                    initialCenter: centroid(plot.polygon!),
-                    initialZoom: 15,
-                  ),
-                  children: [
-                    TileLayer(
-                      urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    ),
-                    PolygonLayer(
-                      polygons: [
-                        Polygon(
-                          points: plot.polygon!,
-                          color: Colors.green.withValues(alpha: 0.35),
-                          borderColor: Colors.green.shade800,
-                          borderStrokeWidth: 2,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
+              PlotMapView(polygon: plot.polygon!)
             else
               Container(
                 height: 64,
@@ -212,45 +190,6 @@ class _FarmerHomePageState extends State<FarmerHomePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
           content: Text('V1: เปิดกล้องสแกน QR หน้าแปลง หรือกด QR Trace จากการ์ดแปลง')),
-    );
-  }
-}
-
-/// Reusable polygon preview (also used by trace page).
-class PlotMiniMap extends StatelessWidget {
-  const PlotMiniMap(
-      {super.key, required this.polygon, this.height = 160});
-
-  final List<LatLng> polygon;
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      child: FlutterMap(
-        options: MapOptions(
-          initialCenter: centroid(polygon),
-          initialZoom: 15,
-          interactionOptions:
-              const InteractionOptions(flags: InteractiveFlag.none),
-        ),
-        children: [
-          TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          ),
-          PolygonLayer(
-            polygons: [
-              Polygon(
-                points: polygon,
-                color: Colors.green.withValues(alpha: 0.35),
-                borderColor: Colors.green.shade800,
-                borderStrokeWidth: 2,
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

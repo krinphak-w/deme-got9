@@ -39,6 +39,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void resetFont() {
+    fontScale = 1.0;
+    notifyListeners();
+  }
+
   String tr(String key) => t(key, lang);
 
   // ---------- auth (mock OTP) ----------
