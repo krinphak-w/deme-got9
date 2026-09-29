@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOT9 — Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+<header class="topbar">
+  <span class="logo-dot">G</span><h1>GOT9 Dashboard</h1><span class="spacer"></span>
+  <a href="#" onclick="got9Logout();return false;">ออกจากระบบ</a>
+</header>
+<main id="dashboard">
+  <div class="card"><h2 id="whoami">…</h2><p class="hint">ข้อมูลจำลอง เก็บในเครื่อง (localStorage)</p></div>
+
+  <!-- F-ID -->
+  <section data-for="F-ID">
+    <div class="card"><h2>อากาศภูเรือวันนี้</h2><div id="weatherBox">กำลังโหลด…</div></div>
+    <div class="card">
+      <h2>Smart Mapping — แปลงสาธิต 3 งาน</h2>
+      <div id="map"></div>
+      <p class="legend"><span class="swatch" style="background:#1B5E20"></span> แปลงอินทรีย์
+      <span class="swatch" style="background:#C62828"></span> แนวกันชน (Buffer Zone) กันปนเปื้อน</p>
+    </div>
+    <div class="card">
+      <h2>บันทึกกิจกรรมประจำวัน <span class="badge green">Offline-First</span></h2>
+      <p class="hint">ไม่มีเน็ตก็บันทึกได้ — เก็บลง localStorage ทันที <span id="actCount"></span></p>
+      <form onsubmit="return got9AddActivity(this)">
+        <label>กิจกรรมวันนี้ (เช่น ใส่ปุ๋ยหมัก 20 กก. / ถอนวัชพืช)</label>
+        <input name="activity" required placeholder="พิมพ์กิจกรรม…">
+        <button class="btn btn-primary" type="submit">บันทึก (ออฟไลน์ได้)</button>
+      </form>
+      <ul class="clean" id="actList"></ul>
+    </div>
+  </section>
+
+  <!-- B-ID -->
+  <section data-for="B-ID">
+    <div class="card"><h2>สำหรับคุณ</h2><div id="elementBanner">…</div></div>
+    <div class="card">
+      <h2>พรีออเดอร์ — FREYA FLOW <span class="badge green">Yield Buffer ป้องกันส่งไม่ครบ</span></h2>
+      <div class="product">
+        <div class="thumb">🐻</div>
+        <div><h3>เยลลี่หมีขิง (Ginger Bear Gummies) — FREYA FLOW</h3><div class="price">฿129 / กล่อง</div></div>
+      </div>
+      <div class="progress"><div style="width:62%"></div></div>
+      <p class="hint">Yield Buffer: รับพรีออเดอร์ 62/100 กล่อง — จำกัด 70% ของผลผลิตคาดการณ์</p>
+      <div class="product">
+        <div class="thumb">🌿</div>
+        <div><h3>สมุนไพรตรีผลา (Triphala) — FREYA FLOW</h3><div class="price">฿159 / ห่อ</div></div>
+      </div>
+      <div class="progress"><div style="width:35%"></div></div>
+      <p class="hint">Yield Buffer: รับพรีออเดอร์ 35/100 ห่อ — จำกัด 70% ของผลผลิตคาดการณ์</p>
+    </div>
+    <div class="card">
+      <h2>ท่องเที่ยวเชิงนิเวศ</h2>
+      <p><b>Workshop: Art Journaling &amp; Bamboo Craft ที่ฟาร์มภูเรือ</b></p>
+      <p><span class="badge brown">Carrying Capacity: 15/20 ท่าน</span>
+      <span class="badge blue">฿399/ท่าน</span></p>
+      <button class="btn btn-brown" type="button" onclick="alert('จองจำลองสำเร็จ! (mock)')">จอง Workshop</button>
+    </div>
+  </section>
+
+  <!-- C-ID -->
+  <section data-for="C-ID">
+    <div class="card"><h2>ข้อมูลองค์กร</h2><div id="corpCard">—</div></div>
+    <div class="card">
+      <h2>พรีออเดอร์ B2B — FREYA FLOW</h2>
+      <div class="product">
+        <div class="thumb">🐻</div>
+        <div><h3>เยลลี่หมีขิง (ลังละ 50 กล่อง) — ราคาองค์กร</h3><div class="price">฿5,500 / ลัง + ใบกำกับภาษี</div></div>
+      </div>
+      <div class="progress"><div style="width:62%"></div></div>
+      <p class="hint">Yield Buffer: จำกัด 70% ของผลผลิตคาดการณ์ — การันตีส่งครบตามสัญญา</p>
+    </div>
+    <div class="card">
+      <h2>ท่องเที่ยวเชิงนิเวศ (CSR/Outing)</h2>
+      <p><b>Workshop: Art Journaling &amp; Bamboo Craft ที่ฟาร์มภูเรือ</b></p>
+      <p><span class="badge brown">Carrying Capacity: 15/20 ท่าน</span></p>
+      <button class="btn btn-brown" type="button" onclick="alert('ขอใบเสนอราคาจำลองสำเร็จ! (mock)')">ขอใบเสนอราคา</button>
+    </div>
+  </section>
+</main>
+
+<div class="a11y" role="group" aria-label="ขนาดตัวอักษร">
+  <button onclick="got9Font(0)">A-</button><button onclick="got9Font(1)">A</button><button onclick="got9Font(2)">A+</button>
+</div>
+<footer>GOT9 static mock-up • ข้อมูลทั้งหมดเป็นข้อมูลจำลองในเบราว์เซอร์ (localStorage)</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

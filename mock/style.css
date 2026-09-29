@@ -1,0 +1,184 @@
+/* GOT9 MVP static mock-up — mobile-first, rem-based.
+   Palette: Dark Green (primary), Earth Brown (secondary), Water Blue (accent).
+   :root font-size is set dynamically by app.js (A- / A / A+). */
+:root {
+  --green: #1B5E20;
+  --green-dark: #144A18;
+  --green-soft: #E8F5E9;
+  --brown: #6D4C41;
+  --brown-soft: #EFEBE9;
+  --blue: #0288D1;
+  --blue-soft: #E1F5FE;
+  --line-green: #06C755;
+  --ink: #212121;
+  --muted: #757575;
+  --card: #FFFFFF;
+  --bg: #F7F9F6;
+  --danger: #C62828;
+  --radius: 0.75rem;
+  font-size: 16px; /* overridden by JS */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Prompt', 'Noto Sans Thai', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-bottom: 5rem;
+}
+
+header.topbar {
+  background: var(--green);
+  color: #fff;
+  padding: 0.9rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+header.topbar .logo-dot {
+  width: 2rem; height: 2rem; border-radius: 50%;
+  background: #fff; color: var(--green);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1.2rem;
+}
+header.topbar h1 { font-size: 1.05rem; margin: 0; font-weight: 600; }
+header.topbar .spacer { flex: 1; }
+header.topbar a { color: #fff; font-size: 0.85rem; }
+
+main { max-width: 34rem; margin: 0 auto; padding: 1rem; }
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0.1rem 0.4rem rgba(0,0,0,0.08);
+}
+.card h2 { margin: 0 0 0.5rem; font-size: 1.1rem; color: var(--green-dark); }
+.card p.hint { color: var(--muted); font-size: 0.85rem; margin: 0.25rem 0 0; }
+
+/* Role tabs */
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tab {
+  flex: 1; text-align: center; padding: 0.7rem 0.25rem;
+  border-radius: var(--radius); border: 0.12rem solid var(--green);
+  background: #fff; color: var(--green); font-weight: 600;
+  cursor: pointer; font-size: 0.9rem; font-family: inherit;
+}
+.tab.active { background: var(--green); color: #fff; }
+.tabpane { display: none; }
+.tabpane.active { display: block; }
+
+/* Forms */
+label { display: block; font-size: 0.9rem; margin: 0.7rem 0 0.25rem; font-weight: 500; }
+input, select {
+  width: 100%; padding: 0.65rem 0.7rem; font-size: 1rem;
+  border: 0.1rem solid #BDBDBD; border-radius: 0.5rem; font-family: inherit;
+}
+input:focus, select:focus { outline: 0.15rem solid var(--blue); border-color: var(--blue); }
+.radio-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.radio-row label {
+  flex: 1; border: 0.1rem solid #BDBDBD; border-radius: 0.5rem;
+  padding: 0.55rem 0.4rem; text-align: center; font-size: 0.85rem; margin: 0; cursor: pointer;
+}
+.radio-row input { display: none; }
+.radio-row input:checked + span { font-weight: 700; color: var(--green); }
+.radio-row label:has(input:checked) { border-color: var(--green); background: var(--green-soft); }
+
+button.btn {
+  width: 100%; padding: 0.8rem; margin-top: 1rem; font-size: 1rem; font-weight: 600;
+  border: none; border-radius: 0.6rem; cursor: pointer; font-family: inherit;
+}
+.btn-line { background: var(--line-green); color: #fff; }
+.btn-primary { background: var(--green); color: #fff; }
+.btn-brown { background: var(--brown); color: #fff; }
+.btn-ghost { background: #fff; color: var(--green); border: 0.12rem solid var(--green); }
+
+.notice {
+  background: var(--blue-soft); border-left: 0.3rem solid var(--blue);
+  padding: 0.6rem 0.8rem; border-radius: 0 0.5rem 0.5rem 0;
+  font-size: 0.85rem; margin: 0.8rem 0;
+}
+
+/* Progress / badges */
+.progress { height: 0.8rem; background: #E0E0E0; border-radius: 1rem; overflow: hidden; margin: 0.4rem 0; }
+.progress > div { height: 100%; background: var(--green); border-radius: 1rem; }
+.badge {
+  display: inline-block; font-size: 0.78rem; font-weight: 600;
+  padding: 0.15rem 0.6rem; border-radius: 1rem; margin: 0.15rem 0.2rem 0.15rem 0;
+}
+.badge.green { background: var(--green-soft); color: var(--green-dark); }
+.badge.brown { background: var(--brown-soft); color: var(--brown); }
+.badge.blue { background: var(--blue-soft); color: #01579B; }
+.badge.red { background: #FFEBEE; color: var(--danger); }
+
+.product { display: flex; gap: 0.8rem; align-items: center; }
+.product .thumb {
+  width: 4rem; height: 4rem; border-radius: 0.6rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 2rem;
+  background: var(--green-soft);
+}
+.product h3 { margin: 0 0 0.2rem; font-size: 1rem; }
+.product .price { color: var(--brown); font-weight: 700; }
+
+/* Map */
+#map { height: 16rem; border-radius: var(--radius); z-index: 1; }
+.legend { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+.swatch { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 0.2rem; vertical-align: middle; }
+
+/* Activity list */
+ul.clean { list-style: none; padding: 0; margin: 0.5rem 0 0; }
+ul.clean li {
+  background: var(--green-soft); border-radius: 0.5rem;
+  padding: 0.5rem 0.7rem; margin-bottom: 0.4rem; font-size: 0.9rem;
+}
+ul.clean li small { color: var(--muted); }
+
+/* AI report + hero */
+.hero {
+  border-radius: var(--radius); padding: 2.2rem 1.2rem; color: #fff; text-align: center;
+  background: linear-gradient(160deg, #1B5E20 10%, #2E7D32 45%, #0288D1 100%);
+  position: relative; overflow: hidden; margin-bottom: 1rem;
+}
+.hero .sun {
+  position: absolute; top: 1rem; right: 1.4rem; width: 3rem; height: 3rem;
+  background: #FFF176; border-radius: 50%; opacity: 0.9;
+}
+.hero .hills {
+  position: absolute; bottom: -1.2rem; left: -10%; width: 120%; height: 4rem;
+  background: rgba(255,255,255,0.18); border-radius: 50% 50% 0 0;
+}
+.hero h2 { margin: 0.2rem 0; font-size: 1.4rem; position: relative; }
+.hero p { margin: 0; opacity: 0.92; position: relative; }
+.ai-report {
+  background: #F3E5F5; border: 0.1rem solid #CE93D8; border-radius: var(--radius);
+  padding: 1rem; font-size: 0.92rem;
+}
+.ai-report .ai-head { font-weight: 700; color: #6A1B9A; margin-bottom: 0.4rem; }
+
+/* Floating A11y widget */
+.a11y {
+  position: fixed; right: 0.8rem; bottom: 0.8rem; z-index: 100;
+  background: var(--ink); color: #fff; border-radius: 2rem;
+  display: flex; align-items: center; box-shadow: 0 0.2rem 0.8rem rgba(0,0,0,0.3);
+}
+.a11y button {
+  background: transparent; border: none; color: #fff;
+  font-weight: 700; font-size: 0.95rem; padding: 0.7rem 0.75rem; cursor: pointer;
+}
+.a11y button + button { border-left: 1px solid rgba(255,255,255,0.25); }
+.a11y button.cur { color: #FFEB3B; }
+
+footer { text-align: center; color: var(--muted); font-size: 0.78rem; padding: 1rem; }
+
+@media (min-width: 40rem) {
+  main { max-width: 44rem; }
+  #map { height: 20rem; }
+}

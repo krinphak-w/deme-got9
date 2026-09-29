@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOT9 — เข้าสู่ระบบ / สมัครสมาชิก</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="topbar"><span class="logo-dot">G</span><h1>GOT9 Greenica OrgaTech (Demo)</h1></header>
+<main>
+  <div class="card">
+    <h2>เข้าร่วม GOT9 — ฟรีช่วง Beta</h2>
+    <p class="hint">เลือกบทบาทของคุณ แล้วสมัครหรือล็อกอินด้วย LINE (จำลอง)</p>
+    <div class="tabs">
+      <button class="tab active" data-role-tab="F-ID" onclick="got9Tab('F-ID')">F-ID<br>เกษตรกร</button>
+      <button class="tab" data-role-tab="B-ID" onclick="got9Tab('B-ID')">B-ID<br>ผู้ซื้อ</button>
+      <button class="tab" data-role-tab="C-ID" onclick="got9Tab('C-ID')">C-ID<br>องค์กร</button>
+    </div>
+
+    <!-- F-ID -->
+    <div class="tabpane active" id="pane-F-ID">
+      <button class="btn btn-line" onclick="got9LineLogin('F-ID')">Login with LINE (เกษตรกร)</button>
+      <div class="notice">Free beta ใช้ LINE Login แทน SMS OTP เพื่อประหยัดค่าใช้จ่าย — ไม่เสียเงินสักบาท</div>
+      <form onsubmit="return got9Submit('F-ID', this)">
+        <label>ชื่อ-นามสกุล</label>
+        <input name="farmerName" required placeholder="เช่น สมชาย ใจดี">
+        <label>จังหวัด</label>
+        <select name="province"><option selected>เลย</option><option>อุดรธานี</option><option>เชียงราย</option></select>
+        <label>อำเภอ</label>
+        <select name="amphoe"><option selected>ภูเรือ</option><option>เมืองเลย</option><option>ด่านซ้าย</option></select>
+        <label>ขนาดฟาร์ม</label>
+        <div class="radio-row">
+          <label><input type="radio" name="farmSize" value="<1ไร่/3งาน" checked><span>&lt; 1 ไร่ / 3 งาน</span></label>
+          <label><input type="radio" name="farmSize" value="1-5ไร่"><span>1–5 ไร่</span></label>
+          <label><input type="radio" name="farmSize" value=">5ไร่"><span>&gt; 5 ไร่</span></label>
+        </div>
+        <label>ชนิดพืช</label>
+        <select name="cropType"><option>สมุนไพร</option><option>ผักอินทรีย์</option><option>ผลไม้</option></select>
+        <button class="btn btn-primary" type="submit">สมัคร F-ID</button>
+      </form>
+    </div>
+
+    <!-- B-ID -->
+    <div class="tabpane" id="pane-B-ID">
+      <button class="btn btn-line" onclick="got9LineLogin('B-ID')">Login with LINE (ผู้ซื้อ)</button>
+      <div class="notice">Free beta ใช้ LINE Login แทน SMS OTP เพื่อประหยัดค่าใช้จ่าย — ไม่เสียเงินสักบาท</div>
+      <form onsubmit="return got9Submit('B-ID', this)">
+        <label>ชื่อที่แสดง</label>
+        <input name="displayName" required placeholder="เช่น น้องมิ้นท์">
+        <label>วันเกิด + เวลาเกิด</label>
+        <input name="dob" type="datetime-local">
+        <p class="hint">เพื่อวิเคราะห์ธาตุเจ้าเรือนตามศาสตร์แพทย์แผนไทย &amp; โป๊ยหยี่สี่เถียว (จำลอง)</p>
+        <button class="btn btn-primary" type="submit">สมัคร B-ID</button>
+      </form>
+    </div>
+
+    <!-- C-ID -->
+    <div class="tabpane" id="pane-C-ID">
+      <button class="btn btn-line" onclick="got9LineLogin('C-ID')">Login with LINE (องค์กร)</button>
+      <div class="notice">Free beta ใช้ LINE Login แทน SMS OTP เพื่อประหยัดค่าใช้จ่าย — ไม่เสียเงินสักบาท</div>
+      <form onsubmit="return got9Submit('C-ID', this)">
+        <label>ชื่อบริษัท/องค์กร</label>
+        <input name="companyName" required placeholder="เช่น โรงแรมภูเรือ จำกัด">
+        <label>เลขประจำตัวผู้เสียภาษี (13 หลัก)</label>
+        <input name="taxId" inputmode="numeric" maxlength="13" required placeholder="0XXXXXXXXXXXX">
+        <label>ผู้ติดต่อ</label>
+        <input name="contactPerson" required>
+        <label>เบอร์โทร</label>
+        <input name="tel" type="tel" required>
+        <label>ประเภทธุรกิจ</label>
+        <select name="bizType"><option>โรงแรม/ที่พัก</option><option>ร้านอาหาร</option><option>โรงพยาบาล/เวลเนส</option><option>อื่นๆ</option></select>
+        <button class="btn btn-primary" type="submit">สมัคร C-ID</button>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <h2>สแกน QR สินค้า?</h2>
+    <p class="hint">ไม่ต้อง login ก็ดูย้อนรอย + เรื่องเล่า AI ได้</p>
+    <a href="qr-trace.html"><button class="btn btn-ghost" type="button">เปิดหน้า QR Traceability (สาธารณะ)</button></a>
+  </div>
+</main>
+
+<div class="a11y" role="group" aria-label="ขนาดตัวอักษร">
+  <button onclick="got9Font(0)">A-</button><button onclick="got9Font(1)">A</button><button onclick="got9Font(2)">A+</button>
+</div>
+<footer>GOT9 static mock-up • ข้อมูลทั้งหมดเป็นข้อมูลจำลองในเบราว์เซอร์ (localStorage)</footer>
+<script src="app.js"></script>
+</body>
+</html>
