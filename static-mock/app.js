@@ -42,6 +42,10 @@
   window.got9LineLogin = function (role) {
     saveSession(role, { via: 'LINE-mock', at: new Date().toISOString() });
   };
+  // "Login with Gmail" mock: same zero-cost logic via Google account.
+  window.got9GoogleLogin = function (role) {
+    saveSession(role, { via: 'Gmail-mock', at: new Date().toISOString() });
+  };
   window.got9Submit = function (role, form) {
     var data = { via: 'form', at: new Date().toISOString() };
     Array.prototype.forEach.call(form.querySelectorAll('[name]'), function (el) {
