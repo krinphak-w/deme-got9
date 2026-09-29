@@ -97,6 +97,10 @@ button.btn {
   border: none; border-radius: 0.6rem; cursor: pointer; font-family: inherit;
 }
 .btn-line { background: var(--line-green); color: #fff; }
+.btn-google {
+  background: #fff; color: #3c4043; border: 0.1rem solid #dadce0;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
 .btn-primary { background: var(--green); color: #fff; }
 .btn-brown { background: var(--brown); color: #fff; }
 .btn-ghost { background: #fff; color: var(--green); border: 0.12rem solid var(--green); }

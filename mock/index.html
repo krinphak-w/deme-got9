@@ -23,6 +23,7 @@
     <!-- F-ID -->
     <div class="tabpane active" id="pane-F-ID">
       <button class="btn btn-line" onclick="got9LineLogin('F-ID')">Login with LINE (เกษตรกร)</button>
+      <button class="btn btn-google" onclick="got9GoogleLogin('F-ID')"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.2H12v4.1h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.7 3.4 2.7.2.1c2.2-2 3.9-5 3.9-9.2z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.7.1-3 2.4v.5C3.5 21.3 7.4 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.7-2.9-2.3-.5.2C.6 8.9 0 10.3 0 12s.6 3.1 1.7 4.4l3.5-2z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.4 0 3.5 2.7 1.7 6.6l3.5 2.7c1-2.9 3.7-4.6 6.8-4.6z"/></svg>Login with Gmail (เกษตรกร)</button>
       <div class="notice">Free beta ใช้ LINE Login แทน SMS OTP เพื่อประหยัดค่าใช้จ่าย — ไม่เสียเงินสักบาท</div>
       <form onsubmit="return got9Submit('F-ID', this)">
         <label>ชื่อ-นามสกุล</label>
@@ -46,6 +47,7 @@
     <!-- B-ID -->
     <div class="tabpane" id="pane-B-ID">
       <button class="btn btn-line" onclick="got9LineLogin('B-ID')">Login with LINE (ผู้ซื้อ)</button>
+      <button class="btn btn-google" onclick="got9GoogleLogin('B-ID')"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.2H12v4.1h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.7 3.4 2.7.2.1c2.2-2 3.9-5 3.9-9.2z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.7.1-3 2.4v.5C3.5 21.3 7.4 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.7-2.9-2.3-.5.2C.6 8.9 0 10.3 0 12s.6 3.1 1.7 4.4l3.5-2z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.4 0 3.5 2.7 1.7 6.6l3.5 2.7c1-2.9 3.7-4.6 6.8-4.6z"/></svg>Login with Gmail (ผู้ซื้อ)</button>
       <div class="notice">Free beta ใช้ LINE Login แทน SMS OTP เพื่อประหยัดค่าใช้จ่าย — ไม่เสียเงินสักบาท</div>
       <form onsubmit="return got9Submit('B-ID', this)">
         <label>ชื่อที่แสดง</label>
@@ -60,6 +62,7 @@
     <!-- C-ID -->
     <div class="tabpane" id="pane-C-ID">
       <button class="btn btn-line" onclick="got9LineLogin('C-ID')">Login with LINE (องค์กร)</button>
+      <button class="btn btn-google" onclick="got9GoogleLogin('C-ID')"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.2H12v4.1h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.7 3.4 2.7.2.1c2.2-2 3.9-5 3.9-9.2z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.7.1-3 2.4v.5C3.5 21.3 7.4 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.7-2.9-2.3-.5.2C.6 8.9 0 10.3 0 12s.6 3.1 1.7 4.4l3.5-2z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.4 0 3.5 2.7 1.7 6.6l3.5 2.7c1-2.9 3.7-4.6 6.8-4.6z"/></svg>Login with Gmail (องค์กร)</button>
       <div class="notice">Free beta ใช้ LINE Login แทน SMS OTP เพื่อประหยัดค่าใช้จ่าย — ไม่เสียเงินสักบาท</div>
       <form onsubmit="return got9Submit('C-ID', this)">
         <label>ชื่อบริษัท/องค์กร</label>
