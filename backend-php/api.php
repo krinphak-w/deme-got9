@@ -6,6 +6,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/billing.php'; // ระบบเอกสาร ดัดแปลงจากต้นแบบ Vikala Pro
 
 // ---------- CORS ----------
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
@@ -282,5 +283,7 @@ if ($method === 'POST' && ($seg[0] ?? '') === 'upload') {
   if (!move_uploaded_file($f['tmp_name'], $dir . '/' . $name)) send(['error' => 'save failed'], 500);
   send(['path' => 'uploads/' . date('Ym') . '/' . $name], 201);
 }
+
+billing_routes($seg, $method); // จัดการใน billing.php แล้ว exit เองถ้าตรง route
 
 send(['error' => 'not found', 'route' => $route], 404);

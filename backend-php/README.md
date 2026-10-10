@@ -41,6 +41,18 @@
 | GET | `/trace/{plot_id}` | — | สาธารณะ (พิกัดเบลอแล้ว) |
 | POST | `/upload` (multipart `photo`) | Bearer | jpg/png/webp ≤8MB → `uploads/YYYYMM/` |
 
+## ระบบเอกสารรับเงิน/ภาษี (ดัดแปลงจากต้นแบบ Vikala Pro)
+import เพิ่ม: `schema_billing.sql` (8 ตารางเอกสาร) — ไฟล์ `billing.php` ถูกเรียกจาก `api.php` อัตโนมัติ
+
+| Method | Path | หมายเหตุ |
+|---|---|---|
+| POST | `/billing/issue` | ออก invoice/receipt/tax/abbreviated — รันเลข `{ฟาร์ม}-{ประเภท}-{ปี}{ลำดับ}`, บล็อกใบกำกับภาษีถ้าผู้ขายไม่จด VAT |
+| POST | `/billing/{id}/cancel` `{reason}` | ยกเลิกแต่ไม่ลบ (ต้องใส่เหตุผล) |
+| GET | `/billing/reports/sales?seller=&month=&year=` | ยอดขายรายฟาร์ม ไม่นับใบยกเลิก |
+| GET | `/billing/reports/by-user` | ใครออกอะไรบ้าง (ไม่โชว์ยอด) |
+| GET/POST | `/customers?q=` | ทะเบียนลูกค้ากลาง เพิ่ม/แก้ได้อย่างเดียว ห้ามลบ API |
+| GET | `/billing/print/{id}` | HTML สำหรับพิมพ์ (เปลี่ยนธีมได้) |
+
 ## หมายเหตุเฟส 2
 - Auth จริง (OTP/LINE), สิทธิ์ verifier แยกตามบทบาท, e-KYC, rate-limit, และ Opn Payments จะมาเติมในไฟล์นี้
 - `uploads/` ควรกัน list ไฟล์ + ใส่ cron ลบไฟล์เคลมเกิน 30 วัน (Auto-Delete ตาม Blueprint 7.3)
