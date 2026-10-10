@@ -1,0 +1,12 @@
+# GOT9 PHP API — วางไฟล์ทั้งหมดลงโฟลเดอร์เดียวกันบนโฮสต์ (เช่น public_html/got9-api/)
+
+RewriteEngine On
+# ทุก request ที่ไม่ใช่ไฟล์จริง -> ส่งเข้า api.php (รองรับ /plots /logs ... )
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ api.php?_route=$1 [QSA,L]
+
+# ห้ามเปิดดูไฟล์ config ตรงๆ
+<Files "config.php">
+  Require all denied
+</Files>

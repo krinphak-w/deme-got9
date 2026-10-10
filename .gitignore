@@ -16,3 +16,5 @@ run.err.log
 # Secrets - never commit
 .env
 *.env
+backend-php/config.php
+backend-php/uploads/

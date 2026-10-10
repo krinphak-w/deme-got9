@@ -26,18 +26,18 @@
 **Build targets**: Web (release ใช้งานจริง), Android/iOS (โค้ดพร้อม ยังไม่เคย build จริงจัง — ต้องทำก่อนลงเครื่องเกษตรกร)
 **Bundle ปัจจุบัน**: `main.dart.js` ~5.1 MB (release, tree-shaken)
 
-## 2. Backend
+## 2. Backend — **PHP 8.2 + MariaDB 10.6 บนแชร์โฮสต์ cPanel** (ล็อกตามกรอบผู้ใช้)
 
 | ชั้น | เทคโนโลยี | สถานะ |
 |---|---|---|
-| Database | PostgreSQL ผ่าน **Supabase** (สคีมาใน `supabase/migrations.sql`) | มีไฟล์ migration, **ยังไม่สร้าง project จริง** |
-| ตาราง (7) | `users, farm_plots, organic_logs, products, orders, workshops, bookings` (+คอลัมน์ V2/V3: avatar/photo/entry_channel/doc) | พร้อมรัน |
-| Auth | ออกแบบใช้ Supabase Auth (OTP จริงในเฟส 2) — **ปัจจุบัน mock `123456`** | mock |
-| Storage | buckets ที่ต้องสร้าง: `organic-photos, avatars, product-photos` (public read) | ยังไม่สร้าง |
-| RLS | public read plots/logs/products/workshops; write ผ่าน service role (V1) | ในไฟล์แล้ว |
-| Realtime/Edge Functions | ไม่ใช้ในเฟส 1 | — |
-| SDK ฝั่งแอป | `supabase_flutter` (+`supabase, postgrest, gotrue, storage_client`) | 2.17.2 / 2.16.1 / 2.9.1 / 2.27.2 / 2.8.0 |
-| โหมดปัจจุบัน | **MOCK** (keys ว่าง → seed data ในเครื่อง + Hive) | ดู `lib/data/supabase_service.dart` |
+| Hosting | แชร์โฮสต์ cPanel (134.0.30.x, FTP) — PHP 8.2.31 | พร้อมใช้ (ของผู้ใช้) |
+| Database | MariaDB 10.6.27 ผ่าน phpMyAdmin — สคีมา `backend-php/schema.sql` | ไฟล์พร้อม, รอ import |
+| ตาราง (8) | `users, farm_plots, organic_logs, products, orders, workshops, bookings, api_tokens` | พร้อมรัน |
+| API | PHP ล้วนไม่ใช้ framework (`backend-php/api.php` + PDO) — auth mock ออกโทเค็น 30 วัน, CORS เปิดเฉพาะโดเมนแอป | โค้ดพร้อม, รออัปโหลด |
+| กฎฝั่งเซิร์ฟเวอร์ | บังคับ Yield Buffer + คำนวณ GP 5%/VAT 7% ตอนสั่งซื้อ, กันจอง Workshop เกิน + มัดจำ 30%, trace สาธารณะพิกัดเบลอแล้ว | ในโค้ดแล้ว |
+| Auth | mock เลือก role (ตรงกับแอป) — OTP/LINE จริง + e-KYC เป็นงานเฟส 2 | mock |
+| Storage | อัปโหลดรูปผ่าน `POST /upload` → `uploads/YYYYMM/` (jpg/png/webp ≤8MB) | ในโค้ดแล้ว |
+| Supabase | เก็บ `supabase/migrations.sql` ไว้เป็นแบบร่างสคีมาเท่านั้น ไม่ใช้เป็นหลัก | — |
 
 **Third-party APIs**: Open-Meteo (อากาศฟรี ไม่ใช้ key), OSM tiles (แผนที่ฟรี), LINE OA deep-link (`@got9farm`), Ling (import ไฟล์ KML/KMZ — ยังไม่มี API/MOU)
 
