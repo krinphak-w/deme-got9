@@ -95,6 +95,40 @@ class _PlotAddMenuPageState extends State<PlotAddMenuPage> {
                   subtitle: 'ชื่อแปลง + ไร่-งาน-วา + ประเภทที่ดิน + รูปเอกสารสิทธิ์',
                   onTap: () => context.go('/farmer/plot/manual'),
                 ),
+                const SizedBox(height: 8),
+                Card(
+                  color: Colors.blue.shade50,
+                  child: ExpansionTile(
+                    leading: Icon(Icons.help_outline,
+                        color: Colors.blue.shade800, size: 32),
+                    title: const Text(
+                        'ไม่มีไฟล์แผนที่? วาดฟรีใน Google Earth (ไม่เสียเงิน)'),
+                    subtitle: const Text(
+                        'ใช้คอม/แท็บเล็ตจะวาดแม่นกว่ามือถือ — แตะเพื่อดูวิธีทีละขั้น'),
+                    children: const [
+                      _GuideStep(
+                          n: '1',
+                          title: 'เปิด Google Earth หาที่ดิน',
+                          detail:
+                              'เปิด Chrome เข้า earth.google.com → กดแว่นขยายค้นหาหมู่บ้าน/อำเภอภูเรือ → ซูมจนเห็นแปลงตัวเองชัด'),
+                      _GuideStep(
+                          n: '2',
+                          title: 'สร้างโปรเจกต์แล้ววาดแปลง',
+                          detail:
+                              'กดไอคอน "โปรเจกต์" ซ้ายมือ → โปรเจกต์ใหม่ → สร้างใน Google ไดรฟ์ → กด "วาดเส้นหรือรูปร่าง" → คลิกตามมุมที่ดินจนบรรจบ → ตั้งชื่อแปลง (เช่น แปลงสมุนไพร 1) → บันทึก'),
+                      _GuideStep(
+                          n: '3',
+                          title: 'ส่งออกไฟล์ KML',
+                          detail:
+                              'ที่เมนูโปรเจกต์ กดจุด 3 จุดข้างชื่อ → "ส่งออกเป็นไฟล์ KML" → ได้ไฟล์ .kml ฟรี 100%'),
+                      _GuideStep(
+                          n: '4',
+                          title: 'เอามาใส่ GOT9',
+                          detail:
+                              'กลับมาหน้านี้ กด "นำเข้าจาก Ling" (รับไฟล์ KML จาก Google Earth ด้วย) → ระบบสร้างแปลง + หักแนวกันชนให้อัตโนมัติ'),
+                    ],
+                  ),
+                ),
               ],
             ),
     );
@@ -114,6 +148,29 @@ class _PlotAddMenuPageState extends State<PlotAddMenuPage> {
         trailing: const Icon(Icons.arrow_forward_ios),
         onTap: onTap,
       ),
+    );
+  }
+}
+
+/// คู่มือวาด Google Earth ทีละขั้น (เนื้อหาจากบทความต้นฉบับ — ใช้ในแชทบอทได้ด้วย).
+class _GuideStep extends StatelessWidget {
+  const _GuideStep(
+      {required this.n, required this.title, required this.detail});
+
+  final String n;
+  final String title;
+  final String detail;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      leading: CircleAvatar(
+          radius: 14,
+          child: Text(n, style: const TextStyle(fontSize: 12))),
+      title:
+          Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+      subtitle: Text(detail),
     );
   }
 }
