@@ -45,13 +45,13 @@ flutter run --dart-define=SUPABASE_URL=https://xyz.supabase.co --dart-define=SUP
 
 รูปสินค้า: farmer กดไอคอนกล้องบนรูปสินค้าของฟาร์มตัวเองใน /shop ได้ (บีบอัด <2MB เหมือนกัน)
 
-## Demo accounts (OTP mock: `123456`)
-| Role | เบอร์ | เข้าแล้วไปหน้า |
+## Demo accounts (login ฟรีด้วย LINE/Gmail mock — ไม่มี SMS OTP ไม่เสียเงิน)
+| Role | กดปุ่ม | เข้าแล้วไปหน้า |
 |---|---|---|
-| F-ID farmer | 0811111111 | /farmer/home (แปลง PLOT-00001 โฉนด, รับรองแล้ว) |
-| B-ID buyer | 0822222222 | /shop |
-| C-ID corporate | 0333333333 | /corporate |
-| F-ID คทช. (รอรับรอง) | 0811111113 | /farmer/home (PLOT-00003) |
+| F-ID farmer | Login with LINE/Gmail + เลือกเกษตรกร | /farmer/home (แปลง PLOT-00001 โฉนด, รับรองแล้ว) |
+| B-ID buyer | Login with LINE/Gmail + เลือกผู้ซื้อ | /shop |
+| C-ID corporate | Login with LINE/Gmail + เลือกองค์กร | /corporate |
+| F-ID คทช. (รอรับรอง) | — (สลับ id ในโค้ด) | /farmer/home (PLOT-00003) |
 
 ติ๊ก ✅ PDPA consent ก่อนปุ่ม login จะกดได้
 

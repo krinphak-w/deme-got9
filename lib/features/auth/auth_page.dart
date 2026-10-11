@@ -6,7 +6,8 @@ import '../../app.dart';
 import '../../data/app_state.dart';
 import '../../data/models.dart';
 
-/// /auth — phone OTP (mock 123456) + role select + PDPA consent.
+// /auth — zero-cost mock login (LINE / Gmail, NO SMS OTP).
+// SMS OTP costs money per message, so Phase 1 uses social mock login.
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
@@ -15,17 +16,16 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final TextEditingController _phone = TextEditingController(text: '0812345678');
-  final TextEditingController _otp = TextEditingController();
-  bool _otpSent = false;
   bool _consent = false;
   UserRole _role = UserRole.farmer;
 
-  @override
-  void dispose() {
-    _phone.dispose();
-    _otp.dispose();
-    super.dispose();
+  void _login(AppState state, String via) {
+    state.signInMock(role: _role, via: via);
+    context.go(_role == UserRole.farmer
+        ? '/farmer/home'
+        : _role == UserRole.corporate
+            ? '/corporate'
+            : '/shop');
   }
 
   @override
@@ -52,80 +52,65 @@ class _AuthPageState extends State<AuthPage> {
           const Text('ปลูก-รับรอง-แปรรูป-เที่ยว ใน QR เดียว (ภูเรือ)',
               textAlign: TextAlign.center),
           const SizedBox(height: 20),
-          TextField(
-            controller: _phone,
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
-              labelText: state.tr('phone'),
-              border: const OutlineInputBorder(),
+          Text(state.tr('role'),
+              style: Theme.of(context).textTheme.titleMedium),
+          RadioGroup<UserRole>(
+            groupValue: _role,
+            onChanged: (v) => setState(() => _role = v!),
+            child: Column(
+              children: [
+                RadioListTile<UserRole>(
+                  title: Text(state.tr('farmer')),
+                  value: UserRole.farmer,
+                ),
+                RadioListTile<UserRole>(
+                  title: Text(state.tr('buyer')),
+                  value: UserRole.buyer,
+                ),
+                RadioListTile<UserRole>(
+                  title: Text(state.tr('corporate')),
+                  value: UserRole.corporate,
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 12),
-          if (!_otpSent)
-            FilledButton(
-              onPressed: () {
-                if (state.sendMockOtp(_phone.text)) {
-                  setState(() => _otpSent = true);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('OTP (mock): 123456')),
-                  );
-                }
-              },
-              child: const Text('ขอ OTP / Send OTP'),
+          CheckboxListTile(
+            title: Text(state.tr('consent'),
+                style: Theme.of(context).textTheme.bodySmall),
+            value: _consent,
+            onChanged: (v) => setState(() => _consent = v ?? false),
+          ),
+          const SizedBox(height: 4),
+          FilledButton.icon(
+            style: FilledButton.styleFrom(backgroundColor: const Color(0xFF06C755)),
+            icon: const Text('LINE',
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+            label: const Text('Login with LINE (ฟรี ไม่มีค่า SMS)'),
+            onPressed: !_consent ? null : () => _login(state, 'LINE-mock'),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            icon: const Text('G',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4285F4),
+                    fontSize: 20)),
+            label: const Text('Login with Gmail (ฟรี ไม่มีค่า SMS)'),
+            onPressed: !_consent ? null : () => _login(state, 'Gmail-mock'),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.lightBlue.shade50,
+              borderRadius: BorderRadius.circular(8),
             ),
-          if (_otpSent) ...[
-            TextField(
-              controller: _otp,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: state.tr('otp'),
-                border: const OutlineInputBorder(),
-              ),
+            child: const Text(
+              'Free beta ใช้ LINE/Gmail Login แทน SMS OTP เพื่อประหยัดค่าส่ง SMS — ไม่เสียเงินสักบาท',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12),
             ),
-            const SizedBox(height: 12),
-            Text(state.tr('role'),
-                style: Theme.of(context).textTheme.titleMedium),
-            RadioGroup<UserRole>(
-              groupValue: _role,
-              onChanged: (v) => setState(() => _role = v!),
-              child: Column(
-                children: [
-                  RadioListTile<UserRole>(
-                    title: Text(state.tr('farmer')),
-                    value: UserRole.farmer,
-                  ),
-                  RadioListTile<UserRole>(
-                    title: Text(state.tr('buyer')),
-                    value: UserRole.buyer,
-                  ),
-                  RadioListTile<UserRole>(
-                    title: Text(state.tr('corporate')),
-                    value: UserRole.corporate,
-                  ),
-                ],
-              ),
-            ),
-            CheckboxListTile(
-              title: Text(state.tr('consent'),
-                  style: Theme.of(context).textTheme.bodySmall),
-              value: _consent,
-              onChanged: (v) => setState(() => _consent = v ?? false),
-            ),
-            FilledButton(
-              onPressed: (!_consent ||
-                      !state.verifyMockOtp(_otp.text.trim()))
-                  ? null
-                  : () {
-                      state.signIn(phone: _phone.text.trim(), role: _role);
-                      context.go(_role == UserRole.farmer
-                          ? '/farmer/home'
-                          : _role == UserRole.corporate
-                              ? '/corporate'
-                              : '/shop');
-                    },
-              child: Text(state.tr('login')),
-            ),
-          ],
+          ),
         ],
       ),
     );

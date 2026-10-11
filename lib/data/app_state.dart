@@ -46,12 +46,8 @@ class AppState extends ChangeNotifier {
 
   String tr(String key) => t(key, lang);
 
-  // ---------- auth (mock OTP) ----------
-  bool sendMockOtp(String phone) => phone.replaceAll(RegExp(r'\D'), '').length >= 9;
-
-  bool verifyMockOtp(String code) => code == '123456';
-
-  void signIn({required String phone, required UserRole role}) {
+  // ---------- auth (zero-cost mock: LINE / Gmail, NO SMS OTP) ----------
+  void signInMock({required UserRole role, required String via}) {
     const demoIds = {
       UserRole.farmer: 'F-00001',
       UserRole.buyer: 'B-00001',
@@ -60,8 +56,8 @@ class AppState extends ChangeNotifier {
     currentUser = AppUser(
       id: demoIds[role]!,
       role: role,
-      displayName: '${role.code}-Demo ${demoIds[role]}',
-      phone: phone,
+      displayName: '${role.code}-Demo ${demoIds[role]} ($via)',
+      phone: '',
       kycStatus: 'verified',
       consentPdpa: true,
     );
